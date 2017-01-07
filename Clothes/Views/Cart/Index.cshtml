@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/LayoutUser.cshtml";
+}
+@using Clothes.Models
+
+
+<div class="breadcrumbs">
+    <div class="container">
+        <ol class="breadcrumb breadcrumb1 animated wow slideInLeft animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInLeft;">
+            <li><a href="index.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
+            <li class="active">Checkout</li>
+        </ol>
+    </div>
+</div>
+<div class="container">
+    <div class="check-out">
+        <h2>Checkout</h2>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Option</th>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Prices</th>
+                    <th>Delivery details</th>
+                    <th>Sub total</th>
+                </tr>
+                @{int index = 0; }
+
+                @if (Session["cart"] != null)
+                {
+                    foreach (var item in (List<Item>)Session["cart"])
+                    {
+
+                        <tr>
+                           
+                            <td><a href="@Url.Action("Delete", "Cart", new { id = index })">X</a></td>
+                            <td class="ring-in">
+
+                                <a href="@Url.Action("Details", "Product", new { id = item.product.id })" class="at-in"><img src="~/content/images/@item.product.photo" class="img-responsive" alt=""></a>
+                                <div class="sed">
+                                    <h5>@item.product.name</h5>
+                                    <p>@item.product.description</p>
+
+                                </div>
+                                <div class="clearfix"> </div>
+                            </td>
+                            <td>@item.quantity</td>
+                            <td>@item.product.price</td>
+                            <td>free</td>
+                            <td>@(item.product.price * item.quantity)$</td>
+                        </tr>
+                        index++;
+                    }
+                }
+                <tr>
+                    <td colspan="4" class="cart_total"><span class="red">TOTAL:</span></td>
+                    <td>
+                        @{
+                            decimal s = 0;
+                            if (Session["cart"] != null)
+                            {
+                                List<Item> cart = (List<Item>)Session["cart"];
+                                s = cart.Sum(i => i.quantity * i.product.price).Value;
+                            }
+                        }
+                        @s$
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <a href="@Url.Action("Index","Home")" class="to-buy">&lt; continue</a> <a href="@Url.Action("Checkout","Cart")" class="to-buy">checkout &gt;</a>
+      
+        <div class="clearfix"> </div>
+    </div>
+</div>
+

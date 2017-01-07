@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "MyAccount";
+    Layout = "~/Views/Shared/LayoutUser.cshtml";
+}
+@model Clothes.Models.Account
+
+<div class="breadcrumbs">
+    <div class="container">
+        <ol class="breadcrumb breadcrumb1 animated wow slideInLeft animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInLeft;">
+            <li><a href="index.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
+            <li class="active">Account</li>
+        </ol>
+    </div>
+</div>
+<div class="account">
+    <div class="container">
+        <h2>Account</h2>
+        @ViewBag.error
+        @using (Html.BeginForm("MyAccount", "Account", FormMethod.Post))
+        {
+        <div class="account_grid">
+            <div class="col-md-6 login-right">
+                
+
+                    <span>User name</span>
+                @Html.TextBoxFor(model => model.username, new { @class = "contact_input" })
+
+                    <span>Password</span>
+                @Html.PasswordFor(model => model.password, new { @class = "contact_input" })
+                    <div class="word-in">
+                        
+                        <input class="register" type="submit" value="Login">
+                    </div>
+                
+            </div>
+            <div class="col-md-6 login-left">
+                <h4>NEW CUSTOMERS</h4>
+                <p>By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>
+                <a class="acount-btn" href="@Url.Action("Register", "Account")">Create an Account</a>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        }
+    </div>
+</div>
